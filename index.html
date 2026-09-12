@@ -1,107 +1,111 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خطة تطوير أميرة | Learning Roadmap</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <title>Amira | Cloud & DevOps Roadmap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4f7fe;
-            --card-bg: #ffffff;
-            --text-main: #2b3674;
-            --text-muted: #707ebe;
-            --border-color: #e9edf7;
-            --shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --card-border: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #10b981;
             --radius: 16px;
-            --primary: #4318ff;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); padding: 30px 20px; min-height: 100vh; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 40px 20px; min-height: 100vh; }
         
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
-        .status-badge { text-align: center; font-size: 0.9rem; margin-bottom: 30px; font-weight: 600; color: var(--primary); }
+        .header { text-align: center; max-width: 700px; margin: 0 auto 30px auto; }
+        .header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 10px; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header p { color: var(--text-muted); font-size: 1.05rem; }
+        .status-badge { text-align: center; font-size: 0.875rem; margin-bottom: 40px; font-weight: 600; color: var(--accent); display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
+        .container { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
 
         .stage-card {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 25px;
+            padding: 28px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--card-border);
+            position: relative;
         }
 
         .stage-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--card-border);
         }
 
-        .stage-title { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+        .stage-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        .stage-badge { background: rgba(99, 102, 241, 0.15); color: #818cf8; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; text-transform: uppercase; }
 
-        .skills-list { display: flex; flex-direction: column; gap: 15px; }
-        .skill-item { background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #edf2f7; }
-        .skill-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .skill-title { font-weight: 700; }
-        .skill-percentage { font-weight: 700; padding: 3px 8px; border-radius: 6px; background: rgba(67, 24, 255, 0.1); color: var(--primary); }
+        .skills-list { display: flex; flex-direction: column; gap: 18px; }
+        .skill-item { background: #1f2937; padding: 18px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .skill-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .skill-title { font-weight: 600; font-size: 1rem; color: #e5e7eb; }
+        .skill-percentage { font-weight: 700; font-size: 0.875rem; padding: 4px 10px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: var(--accent); }
         
-        .progress-bar-bg { width: 100%; height: 10px; background-color: #e2e8f0; border-radius: 20px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, #868CFF, #4318FF); transition: width 0.6s ease; }
+        .progress-bar-bg { width: 100%; height: 8px; background-color: #374151; border-radius: 10px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #6366f1, #10b981); transition: width 0.5s ease; }
 
-        .controls { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
-        .controls input[type="number"] { width: 70px; padding: 5px; border: 1px solid #cbd5e1; border-radius: 6px; text-align: center; }
-        .controls button { padding: 5px 12px; border: none; border-radius: 6px; background: var(--text-main); color: white; cursor: pointer; font-weight: 600; }
-        .controls button:hover { opacity: 0.9; }
+        .controls { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
+        .controls input[type="number"] { width: 80px; padding: 6px 10px; background: #111827; border: 1px solid var(--card-border); color: #fff; border-radius: 8px; text-align: center; font-size: 0.875rem; }
+        .controls button { padding: 6px 14px; border: none; border-radius: 8px; background: var(--primary); color: white; cursor: pointer; font-weight: 600; font-size: 0.875rem; transition: background 0.2s ease; }
+        .controls button:hover { background: var(--primary-hover); }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>🎯 مسار تطور المهارات (Amira Roadmap)</h1>
-        <p>متابعة التقدم عبر المراحل المختلفة</p>
+        <h1>Amira's DevOps Journey</h1>
+        <p>A structured roadmap for Cloud & Infrastructure Automation</p>
     </div>
-    <div class="status-badge" id="status">🔄 جاري قراءة البيانات...</div>
+    <div class="status-badge" id="status"><span>🔄</span> Connecting to cloud storage...</div>
 
     <div class="container" id="stages-container"></div>
 
     <script>
-        const BIN_ID = '6aa598b2ac6210605ac590d3'; 
-        const MASTER_KEY = '$2a$10$.9wROdkipqRR.4oVTCgKVeCF8S6uHAS7WBL2uqfuSTb/.yNFqtuyO'; 
+        const BIN_ID = 'YOUR_BIN_ID'; 
+        const MASTER_KEY = 'YOUR_MASTER_KEY'; 
         const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-        // الهيكل الافتراضي للمراحل
         const defaultStages = [
             {
-                name: "المرحلة الأولى: الأساسيات (Stage 1)",
+                name: "Stage 1: Core Fundamentals",
                 skills: [
-                    { title: "🌐 English", progress: 20 },
-                    { title: "💻 Bash Script", progress: 70 },
-                    { title: "🐍 Python", progress: 15 }
+                    { title: "🌐 English Communication", progress: 20 },
+                    { title: "💻 Bash Scripting", progress: 70 },
+                    { title: "🐍 Python Programming", progress: 15 },
+                    { title: "📦 Git & Version Control", progress: 0 }
                 ]
             },
             {
-                name: "المرحلة الثانية: الحوسبة السحابية و CI/CD (Stage 2)",
+                name: "Stage 2: Cloud & CI/CD Pipelines",
                 skills: [
-                    { title: "☁️ Azure", progress: 40 },
-                    { title: "📦 Git", progress: 0 },
+                    { title: "☁️ Microsoft Azure", progress: 40 },
                     { title: "⚙️ GitHub Actions", progress: 0 }
                 ]
             },
             {
-                name: "المرحلة الثالثة: الحاويات والإدارة (Stage 3)",
+                name: "Stage 3: Containerization & Orchestration",
                 skills: [
                     { title: "🐳 Docker", progress: 0 },
                     { title: "☸️ Kubernetes (K8s)", progress: 0 }
                 ]
             },
             {
-                name: "المرحلة الرابعة: البنية التحتية ككود والأتمتة (Stage 4)",
+                name: "Stage 4: Infrastructure as Code & Automation",
                 skills: [
                     { title: "🏗️ Terraform", progress: 0 },
                     { title: "📜 Ansible", progress: 0 }
@@ -117,20 +121,18 @@
                     headers: { 'X-Master-Key': MASTER_KEY }
                 });
                 const result = await res.json();
-                
-                // إذا كان الملف السحابي يحتوي على البيانات نقرأها، وإلا نعتمد الهيكل الافتراضي
                 stagesData = result.record.stages || defaultStages;
-                document.getElementById('status').innerText = '🟢 متصل ومحفوظ سحابياً!';
+                document.getElementById('status').innerHTML = '<span>🟢</span> Live Cloud Sync Active';
                 render();
             } catch (err) {
-                document.getElementById('status').innerText = '❌ خطأ في الاتصال بالملف السحابي!';
+                document.getElementById('status').innerHTML = '<span>❌</span> Connection Failed - Showing Local Data';
                 stagesData = defaultStages;
                 render();
             }
         }
 
         async function saveData() {
-            document.getElementById('status').innerText = '⏳ جاري الحفظ...';
+            document.getElementById('status').innerHTML = '<span>⏳</span> Saving updates...';
             try {
                 await fetch(API_URL, {
                     method: 'PUT',
@@ -140,10 +142,10 @@
                     },
                     body: JSON.stringify({ stages: stagesData })
                 });
-                document.getElementById('status').innerText = '🟢 تم الحفظ بنجاح!';
+                document.getElementById('status').innerHTML = '<span>🟢</span> Saved successfully!';
                 render();
             } catch (err) {
-                alert('فشل حفظ البيانات!');
+                alert('Failed to update cloud storage.');
             }
         }
 
@@ -168,7 +170,7 @@
                             </div>
                             <div class="controls">
                                 <input type="number" min="0" max="100" value="${skill.progress}" id="input-${stageIdx}-${skillIdx}">
-                                <button onclick="updateProgress(${stageIdx}, ${skillIdx})">تحديث النسبة</button>
+                                <button onclick="updateProgress(${stageIdx}, ${skillIdx})">Update Progress</button>
                             </div>
                         </div>
                     `;
@@ -177,6 +179,7 @@
                 stageEl.innerHTML = `
                     <div class="stage-header">
                         <div class="stage-title">${stage.name}</div>
+                        <span class="stage-badge">Phase ${stageIdx + 1}</span>
                     </div>
                     <div class="skills-list">${skillsHTML}</div>
                 `;
