@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متابعة الأهداف والتقدم | Our Goals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7fe;
+            --card-bg: #ffffff;
+            --text-main: #2b3674;
+            --text-muted: #707ebe;
+            --border-color: #e9edf7;
+            --shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 30px 20px; min-height: 100vh; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+        .status-badge { text-align: center; font-size: 0.9rem; margin-bottom: 25px; font-weight: 600; color: #4318ff; }
+
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1300px; margin: 0 auto; }
+        .person-card { background: var(--card-bg); border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .card-header { display: flex; align-items: center; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); }
+        .avatar { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; color: #fff; margin-left: 10px; }
+        
+        .card-amira .avatar { background: linear-gradient(135deg, #868CFF 0%, #4318FF 100%); }
+        .card-hagar .avatar { background: linear-gradient(135deg, #FFC56C 0%, #FF9800 100%); }
+        .card-ebtehal .avatar { background: linear-gradient(135deg, #05CD99 0%, #01B574 100%); }
+
+        .skills-list { display: flex; flex-direction: column; gap: 15px; }
+        .skill-item { background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #edf2f7; }
+        .skill-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .skill-title { font-weight: 700; }
+        .skill-percentage { font-weight: 700; padding: 3px 8px; border-radius: 6px; background: rgba(112, 144, 176, 0.1); }
+        .progress-bar-bg { width: 100%; height: 10px; background-color: #e2e8f0; border-radius: 20px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; border-radius: 20px; transition: width 0.6s ease; }
+
+        .card-amira .progress-bar-fill { background: linear-gradient(90deg, #868CFF, #4318FF); }
+        .card-hagar .progress-bar-fill { background: linear-gradient(90deg, #FFC56C, #FF9800); }
+        .card-ebtehal .progress-bar-fill { background: linear-gradient(90deg, #05CD99, #01B574); }
+
+        .controls { display: flex; gap: 6px; margin-top: 10px; }
+        .controls input[type="number"] { width: 70px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 6px; text-align: center; }
+        .controls button { padding: 4px 10px; border: none; border-radius: 6px; background: #2b3674; color: white; cursor: pointer; }
+        .delete-btn { background: #e53e3e !important; margin-right: auto; }
+        
+        .add-skill-btn { margin-top: 20px; width: 100%; padding: 12px; background: transparent; border: 2px dashed #cbd5e1; border-radius: 12px; color: #707ebe; font-weight: 700; cursor: pointer; }
+        .add-skill-btn:hover { border-color: #2b3674; color: #2b3674; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>📊 لوحة متابعة الأهداف والتقدم (Our Goals)</h1>
+        <p>متابعة التطور والمهارات لكل من أميرة، هاجر، وابتهال</p>
+    </div>
+    <div class="status-badge" id="status">🔄 جاري قراءة الملف السحابي...</div>
+
+    <div class="dashboard-grid">
+        <!-- Amira -->
+        <div class="person-card card-amira">
+            <div class="card-header"><div class="avatar"></div><h2>أميرة (Amira)</h2></div>
+            <div class="skills-list" id="amira"></div>
+            <button class="add-skill-btn" onclick="addNewSkill('amira')">+ إضافة مادة / هدف جديد</button>
+        </div>
+
+        <!-- Hagar -->
+        <div class="person-card card-hagar">
+            <div class="card-header"><div class="avatar"></div><h2>هاجر (Hagar)</h2></div>
+            <div class="skills-list" id="hagar"></div>
+            <button class="add-skill-btn" onclick="addNewSkill('hagar')">+ إضافة مادة / هدف جديد</button>
+        </div>
+
+        <!-- Ebtehal -->
+        <div class="person-card card-ebtehal">
+            <div class="card-header"><div class="avatar"></div><h2>اابتهال (Ebtehal)</h2></div>
+            <div class="skills-list" id="ebtehal"></div>
+            <button class="add-skill-btn" onclick="addNewSkill('ebtehal')">+ إضافة مادة / هدف جديد</button>
+        </div>
+    </div>
+
+    <script>
+        // 🛑 ضعي بيانات الـ BIN و Master Key الخاصة بكِ هنا
+        const BIN_ID = '6aa59316ac6210605ac57e73'; 
+        const MASTER_KEY = '$2a$10$.9wROdkipqRR.4oVTCgKVeCF8S6uHAS7WBL2uqfuSTb/.yNFqtuyO'; 
+
+        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        let globalData = {};
+
+        // جلب البيانات من الملف السحابي
+        async function loadData() {
+            try {
+                const res = await fetch(`${API_URL}/latest`, {
+                    headers: { 'X-Master-Key': MASTER_KEY }
+                });
+                const result = await res.json();
+                globalData = result.record;
+                document.getElementById('status').innerText = '🟢 الملف السحابي متصل وقابل للتحديث للجميع!';
+                render();
+            } catch (err) {
+                document.getElementById('status').innerText = '❌ خطأ في الاتصال بالملف السحابي!';
+            }
+        }
+
+        // حفظ البيانات المعدلة في الملف السحابي
+        async function saveData() {
+            document.getElementById('status').innerText = '⏳ جاري الحفظ في الملف السحابي...';
+            try {
+                await fetch(API_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': MASTER_KEY
+                    },
+                    body: JSON.stringify(globalData)
+                });
+                document.getElementById('status').innerText = '🟢 تم الحفظ بنجاح في الملف!';
+                render();
+            } catch (err) {
+                alert('فشل الحفظ في الملف السحابي');
+            }
+        }
+
+        function render() {
+            ['amira', 'hagar', 'ebtehal'].forEach(person => {
+                const container = document.getElementById(person);
+                container.innerHTML = '';
+                
+                const items = globalData[person] || [];
+                items.forEach((item, index) => {
+                    const el = document.createElement('div');
+                    el.className = 'skill-item';
+                    el.innerHTML = `
+                        <div class="skill-top">
+                            <span class="skill-title">${item.title}</span>
+                            <span class="skill-percentage">${item.progress}%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: ${item.progress}%;"></div>
+                        </div>
+                        <div class="controls">
+                            <input type="number" min="0" max="100" value="${item.progress}" id="input-${person}-${index}">
+                            <button onclick="updateProgress('${person}', ${index})">تحديث</button>
+                            <button class="delete-btn" onclick="deleteSkill('${person}', ${index})">حذف</button>
+                        </div>
+                    `;
+                    container.appendChild(el);
+                });
+            });
+        }
+
+        function updateProgress(person, index) {
+            const input = document.getElementById(`input-${person}-${index}`);
+            let val = parseInt(input.value) || 0;
+            if (val < 0) val = 0; if (val > 100) val = 100;
+            
+            globalData[person][index].progress = val;
+            saveData();
+        }
+
+        function addNewSkill(person) {
+            const title = prompt("أدخل اسم المادة أو الهدف الجديد:");
+            if (!title) return;
+            const progress = parseInt(prompt("أدخل نسبة التقدم الحالية (0-100):", "0")) || 0;
+
+            if (!globalData[person]) globalData[person] = [];
+            globalData[person].push({
+                title: `📌 ${title}`,
+                progress: progress > 100 ? 100 : (progress < 0 ? 0 : progress)
+            });
+            
+            saveData();
+        }
+
+        function deleteSkill(person, index) {
+            if (confirm("هل أنت متأكد من حذف هذه المادة؟")) {
+                globalData[person].splice(index, 1);
+                saveData();
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
